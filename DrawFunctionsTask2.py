@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.mlab as mlab
 from scipy.stats import multivariate_normal
-import math
+import math, re
 
 def generateGrid(maxx, minx, maxy, miny, delta):
     """
@@ -26,9 +26,6 @@ def drawContour(xgrid, ygrid, mu, sigma, n, color):
     Bivariate Gaussian distribution for equal shape X, Y.
     x, y donde estara, sigma x, sigmay, mux, muy
     """
-    #Z = mlab.bivariate_normal(xgrid, ygrid, sigmax, sigmay, mux, muy)
-    #plt.contour(xgrid, ygrid, Z, n, colors=color)
-    #plt.clabel(CS, inline=1, fontsize=10)
     pos = np.dstack((xgrid, ygrid))
     rv = multivariate_normal(mu, sigma)
     plt.contour(xgrid, ygrid, rv.pdf(pos), n, colors=color)    
@@ -66,3 +63,28 @@ def getFirstDecimal(a):
     frac=math.modf(a)
     frac1=str(frac[0])
     return frac1[2]
+
+def readFile(file_name, log=False):
+    matriz=[]
+    data = [line for line in open(file_name, 'r')]
+    for i in range(len(data)):
+        columna = []
+        linea = data[i]
+        linea = linea.replace('[', '')
+        linea = linea.replace(']', '')
+        linea = linea.replace(' ', '')
+        linea = linea.replace('\n', '')
+        if(log):print(linea)
+       
+       
+        n1, n2 = linea.split(",")
+        if(log):print(n1, n2)
+        columna.append(float(n1))
+        columna.append(float(n2))
+        matriz.append(columna)
+
+    if (log):
+        for j in range(len(data)):
+            print(matriz[j])
+        print("\n")
+    return matriz
