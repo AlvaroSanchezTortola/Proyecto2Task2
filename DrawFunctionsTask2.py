@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.mlab as mlab
 from scipy.stats import multivariate_normal
 import math, re
+import imageio
 
 def generateGrid(maxx, minx, maxy, miny, delta):
     """
@@ -88,3 +89,6 @@ def readFile(file_name, log=False):
             print(matriz[j])
         print("\n")
     return matriz
+
+def Gif(imagenes):
+    imageio.mimsave('movie.gif', imagenes)
